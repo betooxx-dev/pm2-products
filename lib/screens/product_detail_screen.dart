@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
+import '../cart/cart.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final Product product;
@@ -19,13 +20,17 @@ class ProductDetailScreen extends StatelessWidget {
               'Precio:	\$${product.price.toStringAsFixed(2)}',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                Cart.add(product);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Producto	comprado	exitosamente')),
+                  SnackBar(
+                    content: Text('${product.name} agregado al carrito'),
+                  ),
                 );
               },
-              child: Text('Comprar'),
+              child: Text('Agregar	al	carrito'),
             ),
           ],
         ),
