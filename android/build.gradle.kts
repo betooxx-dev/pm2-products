@@ -12,7 +12,7 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
-subprojects {
+subprojects { // Linea ~16 puede estar aquí
     project.evaluationDependsOn(":app")
 }
 

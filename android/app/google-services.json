@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "197086191664",
+    "project_id": "momolongo-81518",
+    "storage_bucket": "momolongo-81518.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197086191664:android:2a7af6c2f7e51fb5338df5",
+        "android_client_info": {
+          "package_name": "com.example.product_list_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "197086191664-afor1to35c8ijju8gejbqh0kc43215vs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.product_list_app",
+            "certificate_hash": "21457b0e9233db37aeb2e8576926404a65de5b34"
+          }
+        },
+        {
+          "client_id": "197086191664-avfq39avq2kqd1qt412k8qrit8sn9bjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA26EeLqN3IJg8pK9PkNEOyLFk9It2cKOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "197086191664-avfq39avq2kqd1qt412k8qrit8sn9bjr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
