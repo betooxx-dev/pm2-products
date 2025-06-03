@@ -55,7 +55,7 @@ class ApiService {
           Product product = await getProduct(item.productId);
           item.productTitle = product.title;
           item.productPrice = product.price;
-          item.productImage = product.image;
+          // item.productImage = product.image;
         } catch (e) {
           print('Error al obtener detalles del producto ${item.productId}: $e');
         }
