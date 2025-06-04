@@ -20,7 +20,6 @@ void main() async {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       home: user == null ? LoginScreen() : HomeScreen(user: user),
-      // home: LoginScreen()
     ),
   );
 }
