@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_protector/screen_protector.dart';
 import '../services/cart_manager.dart';
 
 class CartScreen extends StatefulWidget {
@@ -11,6 +12,34 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final CartManager _cartManager = CartManager();
+
+  @override
+  void initState() {
+    super.initState();
+    _enableScreenProtection();
+  }
+
+  @override
+  void dispose() {
+    _disableScreenProtection();
+    super.dispose();
+  }
+
+  Future<void> _enableScreenProtection() async {
+    try {
+      await ScreenProtector.protectDataLeakageOn();
+    } catch (e) {
+      print('Error activando protección de pantalla: $e');
+    }
+  }
+
+  Future<void> _disableScreenProtection() async {
+    try {
+      await ScreenProtector.protectDataLeakageOff();
+    } catch (e) {
+      print('Error desactivando protección de pantalla: $e');
+    }
+  }
 
   void _updateQuantity(CartItem item, int newQuantity) {
     setState(() {

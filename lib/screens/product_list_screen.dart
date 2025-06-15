@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:screen_protector/screen_protector.dart';
 import 'dart:convert';
 import '../models/product.dart';
 import '../services/cart_manager.dart';
@@ -21,7 +22,30 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   void initState() {
     super.initState();
+    _enableScreenProtection();
     fetchProducts();
+  }
+
+  @override
+  void dispose() {
+    _disableScreenProtection();
+    super.dispose();
+  }
+
+  Future<void> _enableScreenProtection() async {
+    try {
+      await ScreenProtector.protectDataLeakageOn();
+    } catch (e) {
+      print('Error activando protección de pantalla: $e');
+    }
+  }
+
+  Future<void> _disableScreenProtection() async {
+    try {
+      await ScreenProtector.protectDataLeakageOff();
+    } catch (e) {
+      print('Error desactivando protección de pantalla: $e');
+    }
   }
 
   Future<void> fetchProducts() async {
@@ -82,16 +106,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    constraints: BoxConstraints(
-                      minWidth: 16,
-                      minHeight: 16,
-                    ),
+                    constraints: BoxConstraints(minWidth: 16, minHeight: 16),
                     child: Text(
                       '${_cartManager.itemCount}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 12),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -146,10 +164,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     },
                   ),
                   IconButton(
-                    icon: Icon(
-                      Icons.add_shopping_cart,
-                      color: Colors.blue,
-                    ),
+                    icon: Icon(Icons.add_shopping_cart, color: Colors.blue),
                     onPressed: () => _addToCart(product),
                   ),
                 ],
