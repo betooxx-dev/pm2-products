@@ -4,6 +4,7 @@ import 'package:screen_protector/screen_protector.dart';
 import 'dart:convert';
 import '../models/product.dart';
 import '../services/cart_manager.dart';
+import '../widgets/fcm_test_widget.dart';
 import 'product_detail_screen.dart';
 import 'cart_screen.dart';
 
@@ -11,13 +12,13 @@ class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _ProductListScreenState createState() => _ProductListScreenState();
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
   List<Product> products = [];
   final CartManager _cartManager = CartManager();
+  bool _showFCMTest = false;
 
   @override
   void initState() {
@@ -76,7 +77,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
         ),
       ),
     );
-    setState(() {}); // Actualizar para mostrar cambios en el badge
+    setState(() {});
   }
 
   @override
@@ -85,6 +86,16 @@ class _ProductListScreenState extends State<ProductListScreen> {
       appBar: AppBar(
         title: Text('Productos'),
         actions: [
+          // Botón FCM Test
+          IconButton(
+            icon: Icon(Icons.security, color: Colors.orange),
+            onPressed: () {
+              setState(() {
+                _showFCMTest = !_showFCMTest;
+              });
+            },
+            tooltip: 'FCM Test',
+          ),
           Stack(
             children: [
               IconButton(
@@ -118,60 +129,75 @@ class _ProductListScreenState extends State<ProductListScreen> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: products.length,
-        itemBuilder: (context, index) {
-          final product = products[index];
-          return Card(
-            margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: ListTile(
-              title: Text(
-                product.title,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.description,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    '\$${product.price.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                      fontSize: 16,
+      body: Column(
+        children: [
+          // Widget FCM Test (expandible)
+          if (_showFCMTest) FCMTestWidget(),
+
+          // Lista de productos
+          Expanded(
+            child: ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                final product = products[index];
+                return Card(
+                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: ListTile(
+                    title: Text(
+                      product.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.description,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          '\$${product.price.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.visibility),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (_) =>
+                                        ProductDetailScreen(product: product),
+                              ),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.add_shopping_cart,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () => _addToCart(product),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.visibility),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ProductDetailScreen(product: product),
-                        ),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.add_shopping_cart, color: Colors.blue),
-                    onPressed: () => _addToCart(product),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

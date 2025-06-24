@@ -40,6 +40,8 @@ dependencies:
   google_sign_in: ^6.2.1
   shared_preferences: ^2.2.2
   screen_protector: ^1.4.2
+  firebase_messaging: ^14.7.10
+  flutter_local_notifications: ^17.0.0  # Versión más nueva
 
 dev_dependencies:
   flutter_test:
